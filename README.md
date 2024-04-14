@@ -50,21 +50,9 @@ git push - u origin master
 6. Go to Settings on GitHub, navigate to pages, and change the Source to the main branch.
 7. Access the URL that has been published to verify (it may take some time, so please wait for about 5 minutes).
 
-## Documentation 📑
-
-You can check the tutorial document at https://cucus.notion.site/85e3bec77d904f1fa282cec4756232c3.
 
 ## Deploy History 🌳
 
-2021-12-28
+2024-14-04
 
-- Removed Jekyll settings
-- Removed custom domain connection
-- Changed demo site and image paths
-2021-04-22
-
-- Modified overall layout
-- Changed header image 
-2021-04-20
-
-- Project created
+- first deploy.
