@@ -440,3 +440,59 @@ $(function() {
 
 });
 
+// PyPI Download Stats Fetcher
+$(document).ready(function() {
+	// Function to fetch PyPI download stats
+	function fetchPyPIStats() {
+		const packages = ['mltrackflow', 'redis-cache-toolkit'];
+		let totalDownloads = 0;
+		let completedRequests = 0;
+		
+		// Fallback function to show a placeholder if API fails
+		function showFallback() {
+			$('#total-downloads').html('🆕 New!');
+		}
+		
+		packages.forEach(function(packageName) {
+			// Using pepy.tech API to get total download stats
+			const apiUrl = `https://api.pepy.tech/api/v2/projects/${packageName}`;
+			
+			$.ajax({
+				url: apiUrl,
+				method: 'GET',
+				timeout: 5000,
+				success: function(data) {
+					if (data && data.total_downloads) {
+						totalDownloads += data.total_downloads;
+					}
+				},
+				error: function() {
+					// Silent fail, will use fallback
+				},
+				complete: function() {
+					completedRequests++;
+					if (completedRequests === packages.length) {
+						if (totalDownloads > 0) {
+							// Format number with commas
+							const formattedNumber = totalDownloads.toLocaleString('en-US');
+							$('#total-downloads').html(formattedNumber);
+						} else {
+							showFallback();
+						}
+					}
+				}
+			});
+		});
+		
+		// Set a timeout fallback
+		setTimeout(function() {
+			if (completedRequests < packages.length) {
+				showFallback();
+			}
+		}, 6000);
+	}
+	
+	// Call the function when page loads
+	fetchPyPIStats();
+});
+
